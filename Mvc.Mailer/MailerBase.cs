@@ -244,13 +244,11 @@ namespace Mvc.Mailer {
             return linkedResource;
         }
 
-        private void CreateControllerContext() {
-            if (CurrentHttpContext == null) {
-                throw new ArgumentNullException("CurrentHttpContext", "CurrentHttpContext cannot be null");
-            }
-			var routeData = RouteTable.Routes.GetRouteData(CurrentHttpContext);
-            ControllerContext = new ControllerContext(CurrentHttpContext, routeData, this);
-        }
+	private ControllerContext CreateControllerContext()
+	{
+	    ControllerContext = new ControllerContext(CurrentHttpContext.Request.RequestContext, this);
+	    return ControllerContext;
+	}
 
         /// <summary>
         /// The MailerName determines the folder that contains the views for this mailer
